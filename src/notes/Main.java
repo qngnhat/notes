@@ -5,10 +5,6 @@
  */
 package notes;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-
 /**
  *
  * @author qngnhat
@@ -18,6 +14,8 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    int countAddNewNotesClick = 0;
+
     public Main() {
         initComponents();
         init();
@@ -48,7 +46,7 @@ public class Main extends javax.swing.JFrame {
         btnSearch = new javax.swing.JLabel();
         pnlImage = new javax.swing.JPanel();
         lblImage = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlTop = new javax.swing.JPanel();
         pnlAddNotes = new javax.swing.JPanel();
         btnAddNotes = new javax.swing.JLabel();
         pnlExit = new javax.swing.JPanel();
@@ -56,9 +54,9 @@ public class Main extends javax.swing.JFrame {
         pnlSetting = new javax.swing.JPanel();
         btnSetting = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nezty Notes");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(450, 600));
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
@@ -194,8 +192,8 @@ public class Main extends javax.swing.JFrame {
         lblImage.setToolTipText("");
         pnlImage.add(lblImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 424, -1));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlTop.setBackground(new java.awt.Color(255, 255, 255));
+        pnlTop.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlAddNotes.setBackground(new java.awt.Color(255, 255, 255));
         pnlAddNotes.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -219,7 +217,7 @@ public class Main extends javax.swing.JFrame {
         });
         pnlAddNotes.add(btnAddNotes, "card2");
 
-        jPanel1.add(pnlAddNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        pnlTop.add(pnlAddNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnlExit.setBackground(new java.awt.Color(255, 255, 255));
         pnlExit.setLayout(new java.awt.CardLayout());
@@ -242,7 +240,7 @@ public class Main extends javax.swing.JFrame {
         });
         pnlExit.add(btnExit, "card2");
 
-        jPanel1.add(pnlExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 40, 40));
+        pnlTop.add(pnlExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 40, 40));
 
         pnlSetting.setBackground(new java.awt.Color(255, 255, 255));
         pnlSetting.setLayout(new java.awt.CardLayout());
@@ -262,7 +260,7 @@ public class Main extends javax.swing.JFrame {
         });
         pnlSetting.add(btnSetting, "card2");
 
-        jPanel1.add(pnlSetting, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 40, 40));
+        pnlTop.add(pnlSetting, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 40, 40));
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -275,12 +273,12 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(pnlSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
@@ -395,9 +393,18 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAddNotesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNotesMouseClicked
         // TODO add your handling code here:
-        WritingNoteArea wna = new WritingNoteArea();
-        wna.setVisible(true);
-        wna.setLocation(this.getX()+this.getWidth()+5, this.getY());
+
+        if (countAddNewNotesClick == 0) {
+            WritingNoteArea wna = new WritingNoteArea();
+            wna.setVisible(true);
+            wna.setLocation(this.getX() + this.getWidth() + 5, this.getY());
+            countAddNewNotesClick = 1 + countAddNewNotesClick;
+
+        } else {
+            WritingNoteArea wna = new WritingNoteArea();
+            wna.setVisible(true);
+            wna.setLocation(this.getX() - 30, this.getY() - 30);
+        }
     }//GEN-LAST:event_btnAddNotesMouseClicked
 
     /**
@@ -441,7 +448,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel btnExit;
     private javax.swing.JLabel btnSearch;
     private javax.swing.JLabel btnSetting;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlAddNotes;
@@ -453,6 +459,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSearchBtn;
     private javax.swing.JPanel pnlSetting;
     private javax.swing.JPanel pnlTitle;
+    private javax.swing.JPanel pnlTop;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
 }
